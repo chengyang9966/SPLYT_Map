@@ -9,6 +9,7 @@ import {CreateHeader} from '../utils/header';
 import { HeaderProps } from '../Types';
 import Loading from '../components/Loading';
 
+
 const MapPage=()=>{
     const defaultPosition:LatLngExpression = [1.285194,103.8522982]; // Singapore position
     const [UpdateValue, setUpdateValue] = useState<boolean>(false)
