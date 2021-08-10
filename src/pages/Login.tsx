@@ -10,6 +10,7 @@ import Card from '../components/Card';
 import Checker from '../utils/Checker';
 import CardBtn from '../constant/CardItem';
 import ErrorText from '../constant/ErrorItem';
+import ErrorMsg from '../components/ErrorMsg'
 const LoginPage=(props:LoginPageProps)=>{
     const history=useHistory();
     const [PreviewPassword,setPreviewPassword]=useState<boolean>(false);
@@ -92,7 +93,7 @@ const LoginPage=(props:LoginPageProps)=>{
 						<input type="text" className="form-control"aria-label="username" name="username" onChange={(e)=>onChange(e.target.name,e.target.value)} placeholder="username" value={user.username}/>
 						
 					</div> 
-						<div className="errorText" children={errorType.UserNameText}/>
+                    {ErrorMsg(errorType.UserNameText)}
 					<div className="input-group form-group">
 						<div className="input-group-prepend">
 							<span className="input-group-text">
@@ -103,7 +104,7 @@ const LoginPage=(props:LoginPageProps)=>{
 						<input type={PreviewPassword?'text':'password'} aria-label="password" className="form-control" name="password" onChange={(e)=>onChange(e.target.name,e.target.value)} placeholder="password" value={user.password}/>
                         {EyesIcon(PreviewPassword,()=>setPreviewPassword(!PreviewPassword))}
                     </div>
-                    <div className="errorText" children={errorType.PasswordText}/>
+                    {ErrorMsg(errorType.PasswordText)}
 					{/* <div className="row align-items-center remember">
 						<input type="checkbox">Remember Me</input>
 					</div>
