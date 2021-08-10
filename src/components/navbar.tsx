@@ -5,7 +5,7 @@ import { useLocation,useHistory } from "react-router-dom";
 const SideMenuItem = [
     {
       text: "Home",
-      href: "/",
+      href: "/home",
       icon: <FontAwesomeIcon className="icon-SideMenu" icon={faHome} />,
     },
     {

@@ -40,3 +40,12 @@ export interface HeaderProps{
 export interface MasterPageLayoutProps {
     children:JSX.Element,
 }
+export interface RouteProps {
+    children:JSX.Element,
+    auth:boolean
+}
+
+export interface LoginProps{
+    username:string,
+    password:string
+}

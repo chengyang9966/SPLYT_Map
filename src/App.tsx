@@ -3,8 +3,7 @@ import './App.css';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 import PrivateRoute from './routes/Private';
 import HomePage from './pages/Home';
@@ -16,12 +15,8 @@ function App() {
   return (
     <Router>
     <Switch>
-      <Route path='/' exact component={LoginPage} />
+      <Route path='/login' exact component={LoginPage} />
       <Route path='/home' exact component={HomePage} />
-      {/* <Route path='/login' exact component={Login} />
-      <Route path='/forgetPassword' exact component={ForgetPassword} />
-      <Route path='/passwordReset' exact component={ResetPassword} />
-      <Route path='/expired' exact component={Expired} /> */}
       <PrivateRoute/>
     </Switch>
 
