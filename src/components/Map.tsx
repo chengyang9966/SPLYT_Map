@@ -1,13 +1,12 @@
 import { MapContainer, TileLayer, Marker,Popup,useMap } from "react-leaflet";
-import React,{useEffect,useState} from 'react';
+import {useEffect,useState} from 'react';
 import 'leaflet/dist/leaflet.css';
 import L,{LatLngTuple} from 'leaflet';
 import axios from "axios";
 import {TaxiIcon,TaxiIconSelected} from "./TaxiIcon";
 import distance from '../utils/FIndDistance';
-import {LatLngLiteral,MapContainerProps,ChangeViewProps,TaxiProps,HeaderProps} from '../Types';
+import {MapContainerProps,ChangeViewProps,TaxiProps,HeaderProps} from '../Types';
 import {CreateHeader} from '../utils/header';
-import {SPLYT_SING,SPLYT_LONDON} from '../constant/Location';
 import locationName from '../utils/locationName'
 let config:HeaderProps = CreateHeader();
 // delete L.Icon.prototype._getIconUrl;
@@ -20,7 +19,7 @@ const icon= L.icon({
 
 
 const Map = (props:MapContainerProps) => {
-const{checked,numberOfTaxi,setpickUpTime,UpdateValue,setUpdateValue,position,setLoadingFalse,setLoadingTrue}=props
+const{checked,numberOfTaxi,setpickUpTime,UpdateValue,setUpdateValue,position,SetError,setLoadingFalse,setLoadingTrue}=props
    
     const [Taxis, setTaxis] = useState<TaxiProps[]>([])
  const[TempLocation,setTempLocation]=useState<LatLngTuple>(position)
@@ -51,6 +50,8 @@ const{checked,numberOfTaxi,setpickUpTime,UpdateValue,setUpdateValue,position,set
               setUpdateValue()
               setLoadingFalse()
               setTTempChecked(checked)
+          }).catch(err=>{
+            SetError(err)
           })
       
       }
@@ -75,6 +76,8 @@ const{checked,numberOfTaxi,setpickUpTime,UpdateValue,setUpdateValue,position,set
               setUpdateValue()
               setLoadingFalse()
               setTTempChecked(checked)
+          }).catch(err=>{
+            SetError(err)
           })
     
        

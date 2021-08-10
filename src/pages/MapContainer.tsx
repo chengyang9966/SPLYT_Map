@@ -33,6 +33,16 @@ const MapPage = () => {
     })
     pickUpTime>0&&pickUpTime!==value&&setcardOpen(true)
 }
+  const SetError=(err:string)=>{
+
+    setCardDetails({
+        ...CardDetails,
+        title:'Something went Wrong',
+        description:err,
+        setClose:()=>setcardOpen(false)
+    })
+    setcardOpen(true)
+}
   
   return (
     <>
@@ -50,6 +60,7 @@ const MapPage = () => {
               numberOfTaxi={NumbersOfTaxis}
               setUpdateValue={() => setUpdateValue(!UpdateValue)}
               setpickUpTime={SetPickUpTime}
+              SetError={SetError}
               UpdateValue={UpdateValue}
             />
             <div className="my-5 px-4 d-grid">

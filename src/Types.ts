@@ -19,6 +19,7 @@ export interface MapContainerProps {
     position:LatLngTuple,
     setLoadingTrue:()=>void,
     setLoadingFalse:()=>void,
+    SetError:(value:string)=>void
 }
 
 export interface ChangeViewProps {

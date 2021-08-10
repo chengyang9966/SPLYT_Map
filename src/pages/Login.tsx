@@ -22,8 +22,8 @@ const LoginPage=(props:LoginPageProps)=>{
     }
     const onSubmit=(e:any)=>{
         e.preventDefault();
-        let user=JSON.parse(localStorage.getItem("user")||'{}');
-        let HashPassword=user?user.password:''
+        let LocalUser=JSON.parse(localStorage.getItem("user")||'{}');
+        let HashPassword=LocalUser?LocalUser.password:''
         props.register?
         axios.post('/api/register',user,config).then(res=>{
             localStorage.setItem('user',JSON.stringify(
