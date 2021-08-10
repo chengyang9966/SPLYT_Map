@@ -29,7 +29,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "dev": "PORT=7200 react-scripts start",
+    "dev_mac": "PORT=7200 react-scripts start",
+    "dev_win": "SET PORT=7200  && react-scripts && start",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
