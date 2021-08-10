@@ -247,6 +247,8 @@
   
   .links a{
   margin-left: 4px;
+  color: #FFC312;
+  text-decoration: none;
   }
   .card-body form .input-group{
     margin: 20px 3px;
@@ -264,3 +266,19 @@
     color:black;
     font-weight: bold;
   }
+
+
+  /* Icon Rotate */
+  .rotate {
+    animation: rotation 2s infinite linear;
+
+}
+
+@keyframes rotation {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(180deg);
+  }
+}

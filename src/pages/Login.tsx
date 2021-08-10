@@ -1,14 +1,18 @@
-import React,{useState} from  'react';
+import {useState} from  'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKey, faUser } from '@fortawesome/free-solid-svg-icons';
-import { LoginProps,HeaderProps,LoginPageProps } from '../Types';
-import { useHistory,useLocation } from "react-router";
+import { LoginProps,HeaderProps,LoginPageProps,CardProps } from '../Types';
+import { useHistory } from "react-router";
 import EyesIcon from '../components/EyeIcon';
 import axios from 'axios';
 import {CreateHeader} from '../utils/header';
+import Card from '../components/Card';
+import CardBtn from '../constant/CardItem';
 const LoginPage=(props:LoginPageProps)=>{
     const history=useHistory();
     const [PreviewPassword,setPreviewPassword]=useState<boolean>(false);
+    const [cardOpen, setcardOpen] = useState(false);
+    const [CardDetails,setCardDetails]=useState<CardProps>(CardBtn);
     let config:HeaderProps = CreateHeader();
     const [user,setUser]=useState<LoginProps>({
         username:'',
@@ -31,7 +35,13 @@ const LoginPage=(props:LoginPageProps)=>{
              ))
              history.push('/login')
         }).catch(err=>{
-            console.log(err)
+            setCardDetails({
+                ...CardDetails,
+                title:err.response.statusText,
+                description:err.response.data.message,
+                setClose:()=>setcardOpen(false)
+            })
+            setcardOpen(true)
         })
         :
         axios.post('/api/login',{HashPassword,...user},config).then(res=>{
@@ -40,9 +50,18 @@ const LoginPage=(props:LoginPageProps)=>{
              ))
              localStorage.setItem('login','true')
              history.push('/home')
+        }).catch(err=>{
+            setCardDetails({
+                ...CardDetails,
+                title:err.response.statusText,
+                description:err.response.data.message,
+                setClose:()=>setcardOpen(false)
+            })
+            setcardOpen(true)
         })
     }
     return(
+        <>
         <div className="popUp-Bg d-flex align-items-center justify-content-center">
         <div className="container">
 	<div className="d-flex justify-content-center h-100">
@@ -82,7 +101,7 @@ const LoginPage=(props:LoginPageProps)=>{
 				</form>
 			</div>
 			<div className="card-footer">
-				{props.register?<div className="d-flex justify-content-center links">
+				{props.register?<div className="d-flex justify-content-center text-align-center align-items-center links">
 					Have an account?<a href="/login">Log In</a>
 				</div>:
 				<div className="d-flex justify-content-center links">
@@ -96,6 +115,8 @@ const LoginPage=(props:LoginPageProps)=>{
 	</div>
 </div>
         </div>
+        {cardOpen&&<Card title={CardDetails.title} description={CardDetails.description} setClose={CardDetails.setClose}  />}
+        </>
     )
 }
 

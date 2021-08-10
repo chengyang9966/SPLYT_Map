@@ -51,7 +51,7 @@ const{checked,numberOfTaxi,setpickUpTime,UpdateValue,setUpdateValue,position,Set
               setLoadingFalse()
               setTTempChecked(checked)
           }).catch(err=>{
-            SetError(err)
+            SetError(err.response.data.message)
           })
       
       }
@@ -77,7 +77,7 @@ const{checked,numberOfTaxi,setpickUpTime,UpdateValue,setUpdateValue,position,Set
               setLoadingFalse()
               setTTempChecked(checked)
           }).catch(err=>{
-            SetError(err)
+            SetError(err.response.data.message)
           })
     
        
