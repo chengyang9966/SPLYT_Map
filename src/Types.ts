@@ -73,3 +73,13 @@ export interface CardProps{
     link?:string
     setClose:string |(()=>void)
 }
+
+export interface CheckerProps{
+    username?:string
+    password?:string
+}
+export interface CheckerReturnProps{
+    UserNameText?:string
+    PasswordText?:string
+    Error:Boolean
+}

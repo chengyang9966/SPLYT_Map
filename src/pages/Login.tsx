@@ -1,17 +1,20 @@
 import {useState} from  'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKey, faUser } from '@fortawesome/free-solid-svg-icons';
-import { LoginProps,HeaderProps,LoginPageProps,CardProps } from '../Types';
+import { LoginProps,HeaderProps,LoginPageProps,CardProps,CheckerReturnProps,CheckerProps } from '../Types';
 import { useHistory } from "react-router";
 import EyesIcon from '../components/EyeIcon';
 import axios from 'axios';
 import {CreateHeader} from '../utils/header';
 import Card from '../components/Card';
+import Checker from '../utils/Checker';
 import CardBtn from '../constant/CardItem';
+import ErrorText from '../constant/ErrorItem';
 const LoginPage=(props:LoginPageProps)=>{
     const history=useHistory();
     const [PreviewPassword,setPreviewPassword]=useState<boolean>(false);
-    const [cardOpen, setcardOpen] = useState(false);
+    const [cardOpen, setcardOpen] = useState<boolean>(false);
+    const [errorType, seterrorType] = useState<CheckerReturnProps>(ErrorText);
     const [CardDetails,setCardDetails]=useState<CardProps>(CardBtn);
     let config:HeaderProps = CreateHeader();
     const [user,setUser]=useState<LoginProps>({
@@ -26,39 +29,47 @@ const LoginPage=(props:LoginPageProps)=>{
     }
     const onSubmit=(e:any)=>{
         e.preventDefault();
+       let ErrorItem = Checker(user)
         let LocalUser=JSON.parse(localStorage.getItem("user")||'{}');
         let HashPassword=LocalUser?LocalUser.password:''
-        props.register?
-        axios.post('/api/register',user,config).then(res=>{
-            localStorage.setItem('user',JSON.stringify(
-                res.data
-             ))
-             history.push('/login')
-        }).catch(err=>{
-            setCardDetails({
-                ...CardDetails,
-                title:err.response.statusText,
-                description:err.response.data.message,
-                setClose:()=>setcardOpen(false)
+        if(ErrorItem.Error===false){
+            props.register?
+            axios.post('/api/register',user,config).then(res=>{
+                localStorage.setItem('user',JSON.stringify(
+                    res.data
+                 ))
+                 history.push('/login')
+            }).catch(err=>{
+                setCardDetails({
+                    ...CardDetails,
+                    title:err.response.statusText,
+                    description:err.response.data.message,
+                    setClose:()=>setcardOpen(false)
+                })
+                setcardOpen(true)
             })
-            setcardOpen(true)
-        })
-        :
-        axios.post('/api/login',{HashPassword,...user},config).then(res=>{
-            localStorage.setItem('user',JSON.stringify(
-                res.data
-             ))
-             localStorage.setItem('login','true')
-             history.push('/home')
-        }).catch(err=>{
-            setCardDetails({
-                ...CardDetails,
-                title:err.response.statusText,
-                description:err.response.data.message,
-                setClose:()=>setcardOpen(false)
+            :
+            axios.post('/api/login',{HashPassword,...user},config).then(res=>{
+                localStorage.setItem('user',JSON.stringify(
+                    res.data
+                 ))
+                 localStorage.setItem('login','true')
+                 history.push('/home')
+            }).catch(err=>{
+                setCardDetails({
+                    ...CardDetails,
+                    title:err.response.statusText,
+                    description:err.response.data.message,
+                    setClose:()=>setcardOpen(false)
+                })
+                setcardOpen(true)
             })
-            setcardOpen(true)
-        })
+        }else{
+            seterrorType(ErrorItem)
+            setInterval(()=>{
+                seterrorType(ErrorText)
+            },5000)
+        }
     }
     return(
         <>
@@ -71,16 +82,17 @@ const LoginPage=(props:LoginPageProps)=>{
 			
 			</div>
 			<div className="card-body">
-				<form onSubmit={(data:any)=>onSubmit(data)}>
+				<form onSubmit={(data:any)=>onSubmit(data)} data-testid='form'>
 					 <div className="input-group form-group">
 						<div className="input-group-prepend">
 							<span className="input-group-text">
                                 <FontAwesomeIcon icon={faUser}/>
                             </span>
 						</div>
-						<input type="text" className="form-control" name="username" onChange={(e)=>onChange(e.target.name,e.target.value)} placeholder="username" value={user.username}/>
+						<input type="text" className="form-control"aria-label="username" name="username" onChange={(e)=>onChange(e.target.name,e.target.value)} placeholder="username" value={user.username}/>
 						
 					</div> 
+						<div className="errorText" children={errorType.UserNameText}/>
 					<div className="input-group form-group">
 						<div className="input-group-prepend">
 							<span className="input-group-text">
@@ -88,9 +100,10 @@ const LoginPage=(props:LoginPageProps)=>{
                                 
                                 </span>
 						</div>
-						<input type={PreviewPassword?'text':'password'} className="form-control" name="password" onChange={(e)=>onChange(e.target.name,e.target.value)} placeholder="password" value={user.password}/>
+						<input type={PreviewPassword?'text':'password'} aria-label="password" className="form-control" name="password" onChange={(e)=>onChange(e.target.name,e.target.value)} placeholder="password" value={user.password}/>
                         {EyesIcon(PreviewPassword,()=>setPreviewPassword(!PreviewPassword))}
                     </div>
+                    <div className="errorText" children={errorType.PasswordText}/>
 					{/* <div className="row align-items-center remember">
 						<input type="checkbox">Remember Me</input>
 					</div>
