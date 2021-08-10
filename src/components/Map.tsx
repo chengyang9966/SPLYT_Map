@@ -1,12 +1,14 @@
-import { MapContainer, TileLayer, Marker, Tooltip,Popup,useMapEvents,MapConsumer,useMap } from "react-leaflet";
-import React,{useEffect,useState,useMemo,useRef} from 'react';
+import { MapContainer, TileLayer, Marker,Popup,useMap } from "react-leaflet";
+import React,{useEffect,useState} from 'react';
 import 'leaflet/dist/leaflet.css';
-import L,{LatLngExpression} from 'leaflet';
+import L,{LatLngTuple} from 'leaflet';
 import axios from "axios";
 import {TaxiIcon,TaxiIconSelected} from "./TaxiIcon";
 import distance from '../utils/FIndDistance';
 import {LatLngLiteral,MapContainerProps,ChangeViewProps,TaxiProps,HeaderProps} from '../Types';
 import {CreateHeader} from '../utils/header';
+import {SPLYT_SING,SPLYT_LONDON} from '../constant/Location';
+import locationName from '../utils/locationName'
 let config:HeaderProps = CreateHeader();
 // delete L.Icon.prototype._getIconUrl;
 const icon= L.icon({
@@ -18,94 +20,92 @@ const icon= L.icon({
 
 
 const Map = (props:MapContainerProps) => {
-const{checked,numberOfTaxi,setpickUpTime,UpdateValue,setUpdateValue}=props
-    const defaultPosition:LatLngExpression= [1.285194,103.8522982]; // Singapore position
-    const LondonPosition:LatLngExpression= [51.5049375, -0.0964509]; // London position
+const{checked,numberOfTaxi,setpickUpTime,UpdateValue,setUpdateValue,position,setLoadingFalse,setLoadingTrue}=props
+   
     const [Taxis, setTaxis] = useState<TaxiProps[]>([])
- 
-    const [position, setPosition] = useState(defaultPosition)
+ const[TempLocation,setTempLocation]=useState<LatLngTuple>(position)
+ const[TempChecked,setTTempChecked]=useState<boolean>(checked)
+
    
     const ChangeView=({ center, zoom }:ChangeViewProps)=> {
+
         const map1 = useMap();
-        map1.setView(center, zoom);
+      UpdateValue&&UpdateValue===true&&map1.setView(center, zoom);
         return null;
       }
    
 
     useEffect(()=>{
+      if(UpdateValue&&UpdateValue===true){
+        setLoadingTrue()
+          axios.get('/api/getLocation',
+          Object.assign(config,{params:{
+            lat:position[0],
+            lng:position[1],
+            count:numberOfTaxi,
+          }})).then(res=>{
+              const{pickup_eta,drivers}=res.data
+              setpickUpTime(pickup_eta)
+              setTaxis(drivers)
+              setTempLocation(position)
+              setUpdateValue()
+              setLoadingFalse()
+              setTTempChecked(checked)
+          })
       
-        axios.get('/api/getLocation',
-        Object.assign(config,{params:{
-          lat:defaultPosition[0],
-          lng:defaultPosition[1],
-          count:10,
-        }})).then(res=>{
-            const{pickup_eta,drivers}=res.data
-            setpickUpTime(pickup_eta)
-            setTaxis(drivers)
-            setUpdateValue()
-        })
+      }
+       
 
 
 
     },[UpdateValue])
 
     useEffect(()=>{
-        if(checked&&checked===true){
-            setPosition(LondonPosition)
-            axios.get('/api/getLocation',
-            Object.assign(config,{params:{
-              lat:defaultPosition[0],
-              lng:defaultPosition[1],
-              count:10,
-            }})).then(res=>{
-                const{pickup_eta,drivers}=res.data
-                setpickUpTime(pickup_eta)
-                setTaxis(drivers)
-                setUpdateValue()
-            })
-        }else{
-            setPosition(defaultPosition)
-            axios.get('/api/getLocation',
-            Object.assign(config,{params:{
-              lat:defaultPosition[0],
-              lng:defaultPosition[1],
-              count:10,
-            }})).then(res=>{
-                const{pickup_eta,drivers}=res.data
-                setpickUpTime(pickup_eta)
-                setTaxis(drivers)
-                setUpdateValue()
-            })
-        
-        }
-
-
-    },[checked])
+      setLoadingTrue()
+          axios.get('/api/getLocation',
+          Object.assign(config,{params:{
+            lat:position[0],
+            lng:position[1],
+            count:numberOfTaxi,
+          }})).then(res=>{
+              const{pickup_eta,drivers}=res.data
+              setpickUpTime(pickup_eta)
+              setTaxis(drivers)
+              setTempLocation(position)
+              setUpdateValue()
+              setLoadingFalse()
+              setTTempChecked(checked)
+          })
     
+       
+
+
+
+    },[])
+
     return (
         <div className="TitleContainer MapContainer">
             
-        <MapContainer id="Map1" center={position} zoom={15} scrollWheelZoom={false} >
-        <ChangeView center={!checked?defaultPosition:LondonPosition} zoom={15} /> 
+        <MapContainer id="Map1" center={TempLocation} zoom={15} scrollWheelZoom={false} >
+        <ChangeView center={TempLocation} zoom={15} /> 
         {/* <MyComponent /> */}
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         
-        <Marker position={position} icon={icon}
+        <Marker position={TempLocation} icon={icon}
        
         >
         {/* <Marker position={defaultPosition2}/> */}
           <Popup>
-            Your Current Location is at {!checked?'Splyt Singapore Pte. Ltd':'Splyt (London)'}
+            Your Current Location is at {locationName(TempChecked)}
           </Popup>
         </Marker>
         {
            Taxis&& Taxis.length>0&& Taxis.map((w,i)=>{
 
-               let BearingNumber=()=>{if(distance(position[0],position[1],w.location.latitude,w.location.longitude,"K")<= 0.5){
+               let BearingNumber=()=>{if(distance(TempLocation[0],TempLocation[1],w.location.latitude,w.location.longitude,"K")<= 0.5){
                    return true 
                }else return false
 }

@@ -23,6 +23,7 @@
 .bodyWrapper{
   padding:10px;
   padding-left: 20px;
+  height: 50vw;
 }
 /* Leaflet Component */
 .leaflet-marker-icon{
@@ -115,6 +116,15 @@
   top: 0;
   left: 0;
 }
+.popUp-Bg{
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 4;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
 .IconView{
   width: 20px;
   position: absolute;
@@ -129,7 +139,35 @@
   padding-bottom: 3px;
   cursor: pointer;
 }
-
+/* close BTN */
+.closeBtn{
+  position: absolute;
+  left: 96%;
+  top: -5%;
+  width: 28px;
+  height: 29px;
+  border-radius: 100;
+  background-color:rgba(0,0,0,0.5);
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.closeBtnAlert{
+  position: absolute;
+  left: 67rem;
+  top: 21.3rem;
+  width: 28px;
+  height: 29px;
+  border-radius: 100;
+  background-color:rgba(0,0,0,0.5);
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
 /* Login */
 
 .container{
@@ -137,7 +175,7 @@
   align-content: center;
   }
   
-  .card{
+ .container .h-100 .card{
   height: 370px;
   margin-top: auto;
   margin-bottom: auto;
@@ -215,4 +253,14 @@
   }
   .input-group-prepend .input-group-text{
     padding:0.75rem 1.2rem;
+  }
+  label.form-check-label{
+    font-size: 18px;
+    color:black;
+    font-weight: bold;
+  }
+  .slider-text{
+    font-size: 18px;
+    color:black;
+    font-weight: bold;
   }

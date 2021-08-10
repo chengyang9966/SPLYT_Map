@@ -1,11 +1,13 @@
 import React,{useState} from  'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKey, faUser } from '@fortawesome/free-solid-svg-icons';
-import { LoginProps,HeaderProps } from '../Types';
+import { LoginProps,HeaderProps,LoginPageProps } from '../Types';
+import { useHistory,useLocation } from "react-router";
 import EyesIcon from '../components/EyeIcon';
 import axios from 'axios';
 import {CreateHeader} from '../utils/header';
-const LoginPage=()=>{
+const LoginPage=(props:LoginPageProps)=>{
+    const history=useHistory();
     const [PreviewPassword,setPreviewPassword]=useState<boolean>(false);
     let config:HeaderProps = CreateHeader();
     const [user,setUser]=useState<LoginProps>({
@@ -20,8 +22,24 @@ const LoginPage=()=>{
     }
     const onSubmit=(e:any)=>{
         e.preventDefault();
-        axios.post('/api/login',{body:user,...config}).then(res=>{
-            console.log(res.data)
+        let user=JSON.parse(localStorage.getItem("user")||'{}');
+        let HashPassword=user?user.password:''
+        props.register?
+        axios.post('/api/register',user,config).then(res=>{
+            localStorage.setItem('user',JSON.stringify(
+                res.data
+             ))
+             history.push('/login')
+        }).catch(err=>{
+            console.log(err)
+        })
+        :
+        axios.post('/api/login',{HashPassword,...user},config).then(res=>{
+            localStorage.setItem('user',JSON.stringify(
+                res.data
+             ))
+             localStorage.setItem('login','true')
+             history.push('/home')
         })
     }
     return(
@@ -30,7 +48,7 @@ const LoginPage=()=>{
 	<div className="d-flex justify-content-center h-100">
 		<div className="card">
 			<div className="card-header">
-				<h3>Sign In</h3>
+				<h3>{props.register?"Register":"Sign In"}</h3>
 			
 			</div>
 			<div className="card-body">
@@ -59,18 +77,21 @@ const LoginPage=()=>{
 					</div>
                 */}
                 <div className="form-group d-flex justify-content-center">
-                    <input type="submit" value="Login" className="btn float-right login_btn"/>
+                    <input type="submit" value={props.register?"Register":"Login"} className="btn float-right login_btn"/>
                 </div> 
 				</form>
 			</div>
-			{/* <div className="card-footer">
+			<div className="card-footer">
+				{props.register?<div className="d-flex justify-content-center links">
+					Have an account?<a href="/login">Log In</a>
+				</div>:
 				<div className="d-flex justify-content-center links">
-					Don't have an account?<a href="#">Sign Up</a>
-				</div>
-				<div className="d-flex justify-content-center">
+					Don't have an account?<a href="/register">Sign Up</a>
+				</div>}
+				{/* <div className="d-flex justify-content-center">
 					<a href="#">Forgot your password?</a>
-				</div>
-			</div> */}
+				</div> */}
+			</div>
 		</div>
 	</div>
 </div>

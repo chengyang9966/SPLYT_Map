@@ -1,4 +1,4 @@
-import {LatLngExpression} from 'leaflet';
+import {LatLngExpression,LatLngTuple} from 'leaflet';
 
 export interface LatLngValues {
     success: boolean;
@@ -13,9 +13,12 @@ export interface LatLngValues {
 export interface MapContainerProps {
     checked:boolean,
     numberOfTaxi:number,
-    setpickUpTime:(value: React.SetStateAction<boolean>)=>void,
-    UpdateValue:()=>void,
+    setpickUpTime:(value: number)=>void,
+    UpdateValue:boolean,
     setUpdateValue:() => void,
+    position:LatLngTuple,
+    setLoadingTrue:()=>void,
+    setLoadingFalse:()=>void,
 }
 
 export interface ChangeViewProps {
@@ -48,4 +51,24 @@ export interface RouteProps {
 export interface LoginProps{
     username:string,
     password:string
+}
+export interface LoginPageProps{
+   register?:boolean
+}
+export interface ToogleProps{
+   checked:boolean
+   onChange:()=>void
+}
+
+export interface SliderProps{
+   value:number
+   onChange:(e:any)=>void
+}
+export interface CardProps{
+    title:string
+    description:string
+    button?:boolean
+    buttonText?:string
+    link?:string
+    setClose:string |(()=>void)
 }

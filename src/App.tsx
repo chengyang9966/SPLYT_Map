@@ -6,8 +6,8 @@ import {
   Route
 } from "react-router-dom";
 import PrivateRoute from './routes/Private';
-import HomePage from './pages/Home';
 import LoginPage from './pages/Login';
+import RegisterPage from './pages/Register';
 
 function App() {
 
@@ -16,7 +16,7 @@ function App() {
     <Router>
     <Switch>
       <Route path='/login' exact component={LoginPage} />
-      <Route path='/home' exact component={HomePage} />
+      <Route path='/register' exact component={RegisterPage} />
       <PrivateRoute/>
     </Switch>
 
