@@ -221,6 +221,9 @@
     text-align: center;
     padding-bottom: 10px;
   }
+  .errorTextSpacing{
+    padding-bottom: 5px;
+  }
   .remember{
   color: white;
   }
