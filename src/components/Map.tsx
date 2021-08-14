@@ -62,7 +62,8 @@ const{checked,numberOfTaxi,setpickUpTime,UpdateValue,setUpdateValue,position,Set
     },[UpdateValue])
 
     useEffect(()=>{
-      setLoadingTrue()
+      setInterval(async () => {
+        setLoadingTrue()
           axios.get('/api/getLocation',
           Object.assign(config,{params:{
             lat:position[0],
@@ -80,12 +81,27 @@ const{checked,numberOfTaxi,setpickUpTime,UpdateValue,setUpdateValue,position,Set
             SetError(err.response.data.message)
           })
     
-       
-
-
-
+        }, 300000)
     },[])
-
+useEffect(()=>{
+  setLoadingTrue()
+  axios.get('/api/getLocation',
+  Object.assign(config,{params:{
+    lat:position[0],
+    lng:position[1],
+    count:numberOfTaxi,
+  }})).then(res=>{
+      const{pickup_eta,drivers}=res.data
+      setpickUpTime(pickup_eta)
+      setTaxis(drivers)
+      setTempLocation(position)
+      setUpdateValue()
+      setLoadingFalse()
+      setTTempChecked(checked)
+  }).catch(err=>{
+    SetError(err.response.data.message)
+  })
+},[])
     return (
         <div className="TitleContainer MapContainer">
             
