@@ -1,4 +1,4 @@
-import{  useState } from "react";
+import { useState } from "react";
 import { LatLngExpression } from "leaflet";
 import moment from "moment";
 
@@ -7,14 +7,12 @@ import MasterPageLayout from "../components/masterPage";
 import Loading from "../components/Loading";
 import Toogle from "../components/Toogle";
 import Slider from "../components/Slider";
-import Card from '../components/Card';
+import Card from "../components/Card";
 
-import CardItem from '../constant/CardItem';
-
-import locationName from '../utils/locationName';
+import CardItem from "../constant/CardItem";
+import { SING_LOCATION, LONDON_LOCATION } from "../constant/Location";
+import locationName from "../utils/locationName";
 const MapPage = () => {
-  const defaultPosition: LatLngExpression = [1.285194, 103.8522982]; // Singapore position
-  const LondonPosition: LatLngExpression = [51.5049375, -0.0964509]; // London position
   const [UpdateValue, setUpdateValue] = useState<boolean>(false);
   const [NumbersOfTaxis, setNumbersOfTaxis] = useState<number>(10);
   const [pickUpTime, setpickUpTime] = useState<number>(0);
@@ -22,28 +20,29 @@ const MapPage = () => {
   const [checkedLocation, setcheckedLocation] = useState<boolean>(false);
   const [cardOpen, setcardOpen] = useState(false);
   const [CardDetails, setCardDetails] = useState(CardItem);
-  
-  const SetPickUpTime=(value:number)=>{
-    setpickUpTime(value)
-    setCardDetails({
-        ...CardDetails,
-        title:'Pick Up Estimate time',
-        description:`${locationName(checkedLocation)} at ${moment().add(value,'minutes').format('HH:mm')}`,
-        setClose:()=>setcardOpen(false)
-    })
-    pickUpTime>0&&pickUpTime!==value&&setcardOpen(true)
-}
-  const SetError=(err:string)=>{
 
+  const SetPickUpTime = (value: number) => {
+    setpickUpTime(value);
     setCardDetails({
-        ...CardDetails,
-        title:'Something went Wrong',
-        description:err,
-        setClose:()=>setcardOpen(false)
-    })
-    setcardOpen(true)
-}
-  
+      ...CardDetails,
+      title: "Pick Up Estimate time",
+      description: `${locationName(checkedLocation)} at ${moment()
+        .add(value, "minutes")
+        .format("HH:mm")}`,
+      setClose: () => setcardOpen(false),
+    });
+    pickUpTime > 0 && pickUpTime !== value && setcardOpen(true);
+  };
+  const SetError = (err: string) => {
+    setCardDetails({
+      ...CardDetails,
+      title: "Something went Wrong",
+      description: err,
+      setClose: () => setcardOpen(false),
+    });
+    setcardOpen(true);
+  };
+
   return (
     <>
       <MasterPageLayout>
@@ -53,9 +52,9 @@ const MapPage = () => {
               <h1 className="titleText">Map</h1>
             </div>
             <Map
-            setLoadingTrue={()=>setLoading(true)}
-            setLoadingFalse={()=>setLoading(false)}
-              position={checkedLocation ? defaultPosition : LondonPosition}
+              setLoadingTrue={() => setLoading(true)}
+              setLoadingFalse={() => setLoading(false)}
+              position={!checkedLocation ? SING_LOCATION : LONDON_LOCATION}
               checked={checkedLocation}
               numberOfTaxi={NumbersOfTaxis}
               setUpdateValue={() => setUpdateValue(!UpdateValue)}
@@ -89,7 +88,13 @@ const MapPage = () => {
           </div>
         </>
       </MasterPageLayout>
-         {cardOpen&&<Card title={CardDetails.title} description={CardDetails.description} setClose={CardDetails.setClose}  />}
+      {cardOpen && (
+        <Card
+          title={CardDetails.title}
+          description={CardDetails.description}
+          setClose={CardDetails.setClose}
+        />
+      )}
       {loading && <Loading />}
     </>
   );

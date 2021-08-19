@@ -1,113 +1,109 @@
-
 /* Display Layout */
-.Container-Right{
+.Container-Right {
   /* min-height: 100vw; */
   width: 90%;
-  background-color:#f3f5f3 ;
+  background-color: #f3f5f3;
   height: 100%;
   z-index: 4;
 }
-.MapContainer{
+.MapContainer {
   margin-top: 20px;
   margin-left: 10px;
   margin-bottom: 10px;
-
 }
-.TitleContainer{
+.TitleContainer {
   padding-left: 20px;
   padding-right: 30px;
-  padding-bottom:20px;
-  
+  padding-bottom: 20px;
 }
 /* * Body Wrapper  */
-.bodyWrapper{
-  padding:10px;
+.bodyWrapper {
+  padding: 10px;
   padding-left: 20px;
-  height: 50vw;
+  height: 100%;
+  overflow-x: hidden;
 }
 /* Leaflet Component */
-.leaflet-marker-icon{
+.leaflet-marker-icon {
   cursor: pointer;
 }
 .leaflet-container {
-  width: 100%; 
+  width: 100%;
   height: 600px;
-  border:3px solid #d3d3d3;
+  border: 3px solid #d3d3d3;
 }
 
-.leaflet-marker-icon{
+.leaflet-marker-icon {
   cursor: pointer;
 }
 
-
 /* Side Menu */
-.icon-SideMenu{
+.icon-SideMenu {
   margin-right: 10px;
   color: black;
 }
-.sidebar-header{
+.sidebar-header {
   text-align: center;
   width: 100%;
   margin-bottom: 2rem;
-  padding:10px
+  padding: 10px;
 }
-.nav-link.active  .icon-SideMenu{
+.nav-link.active .icon-SideMenu {
   color: white;
 }
-.fixed-top{
+.fixed-top {
   z-index: 1;
-  }
-.sidebar-nav{
+}
+.sidebar-nav {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
   width: 10%;
-  padding:0px 15px 3rem;
+  padding: 0px 15px 3rem;
   min-width: 170px;
 }
 
-.sidebar-nav .nav-link{
+.sidebar-nav .nav-link {
   font-size: 19px;
-  color: #d3d3d3;;
+  color: #d3d3d3;
   cursor: pointer;
   margin-top: 2rem;
   min-width: 144px;
-  
 }
-.nav-link.active{
+.nav-link.active {
   background-color: black;
   border-radius: 5px;
   width: 100%;
   color: white;
   text-align: start;
 }
-.Hdivider{
+.Hdivider {
   border-right: 2px solid #d3d3d3;
   height: 1.2rem;
 }
-.iconClick{
+.iconClick {
   cursor: pointer;
 }
-.divider{
-  margin:10px;
+.divider {
+  margin: 10px;
   width: 100%;
-  border-bottom:1px solid #d3d3d3;
+  border-bottom: 1px solid #d3d3d3;
 }
 /* Logout Btn */
-.logout-btn{
+.logout-btn {
   position: fixed;
   bottom: 30px;
 }
 
-.titleText{
+.titleText {
   font-weight: bold;
 }
-.SmallCardWrapper{
+.SmallCardWrapper {
   background-color: white;
-  border:0px;
+  border: 0px;
 }
-.popUp-Bg{
+.popUp-Bg {
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 4;
   width: 100%;
@@ -116,7 +112,7 @@
   top: 0;
   left: 0;
 }
-.popUp-Bg{
+.popUp-Bg {
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 4;
   width: 100%;
@@ -125,7 +121,7 @@
   top: 0;
   left: 0;
 }
-.IconView{
+.IconView {
   width: 20px;
   position: absolute;
   right: 11px;
@@ -133,35 +129,35 @@
   cursor: pointer;
   z-index: 4;
 }
-.avatarLogo{
-  border:1px solid black;
+.avatarLogo {
+  border: 1px solid black;
   border-radius: 100%;
   padding-bottom: 3px;
   cursor: pointer;
 }
 /* close BTN */
-.closeBtn{
+.closeBtn {
   position: absolute;
   left: 96%;
   top: -5%;
   width: 28px;
   height: 29px;
   border-radius: 100;
-  background-color:rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   border-radius: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
 }
-.closeBtnAlert{
+.closeBtnAlert {
   position: absolute;
   left: 67rem;
   top: 21.3rem;
   width: 28px;
   height: 29px;
   border-radius: 100;
-  background-color:rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   border-radius: 100%;
   display: flex;
   align-items: center;
@@ -170,115 +166,111 @@
 }
 /* Login */
 
-.container{
+.container {
   height: 100%;
   align-content: center;
-  }
-  
- .container .h-100 .card{
+}
+
+.container .h-100 .card {
   height: 450px;
   margin-top: auto;
   margin-bottom: auto;
   width: 400px;
-  background-color: rgba(0,0,0,0.5) !important;
-  }
-  
-  .social_icon span{
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.social_icon span {
   font-size: 60px;
   margin-left: 10px;
-  color: #FFC312;
-  }
-  
-  .social_icon span:hover{
+  color: #ffc312;
+}
+
+.social_icon span:hover {
   color: white;
   cursor: pointer;
-  }
-  
-  .card-header h3{
+}
+
+.card-header h3 {
   color: white;
-  }
-  
-  .social_icon{
+}
+
+.social_icon {
   position: absolute;
   right: 20px;
   top: -45px;
-  }
-  
-  .input-group-prepend span{
+}
+
+.input-group-prepend span {
   width: 50px;
-  background-color: #FFC312;
+  background-color: #ffc312;
   color: black;
-  border:0 !important;
-  }
-  
-  input:focus{
-  outline: 0 0 0 0  !important;
+  border: 0 !important;
+}
+
+input:focus {
+  outline: 0 0 0 0 !important;
   box-shadow: 0 0 0 0 !important;
-  
-  }
-  .errorText{
-    color:rgb(224, 113, 113);
-    text-align: center;
-    padding-bottom: 10px;
-  }
-  .errorTextSpacing{
-    padding-bottom: 5px;
-  }
-  .remember{
+}
+.errorText {
+  color: rgb(224, 113, 113);
+  text-align: center;
+  padding-bottom: 10px;
+}
+.errorTextSpacing {
+  padding-bottom: 5px;
+}
+.remember {
   color: white;
-  }
-  
-  .remember input
-  {
+}
+
+.remember input {
   width: 20px;
   height: 20px;
   margin-left: 15px;
   margin-right: 5px;
-  }
-  
-  .login_btn{
+}
+
+.login_btn {
   color: black;
-  background-color: #FFC312;
+  background-color: #ffc312;
   width: 100px;
   text-align: center;
-  }
-  
-  .login_btn:hover{
+}
+
+.login_btn:hover {
   color: black;
   background-color: white;
-  }
-  
-  .links{
+}
+
+.links {
   color: white;
-  }
-  
-  .links a{
+}
+
+.links a {
   margin-left: 4px;
-  color: #FFC312;
+  color: #ffc312;
   text-decoration: none;
-  }
-  .card-body form .input-group{
-    margin: 20px 3px;
-  }
-  .input-group-prepend .input-group-text{
-    padding:0.75rem 1.2rem;
-  }
-  label.form-check-label{
-    font-size: 18px;
-    color:black;
-    font-weight: bold;
-  }
-  .slider-text{
-    font-size: 18px;
-    color:black;
-    font-weight: bold;
-  }
+}
+.card-body form .input-group {
+  margin: 20px 3px;
+}
+.input-group-prepend .input-group-text {
+  padding: 0.75rem 1.2rem;
+}
+label.form-check-label {
+  font-size: 18px;
+  color: black;
+  font-weight: bold;
+}
+.slider-text {
+  font-size: 18px;
+  color: black;
+  font-weight: bold;
+}
 
-
-  /* Icon Rotate */
-  .rotate {
-    animation: rotation 2s infinite linear;
-
+/* Icon Rotate */
+.rotate {
+  animation: rotation 2s infinite linear;
 }
 
 @keyframes rotation {
