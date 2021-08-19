@@ -81,7 +81,7 @@ const LoginPage = (props: LoginPageProps) => {
     } else {
       setLoading(false);
       setErrorType(ErrorItem);
-      setInterval(() => {
+      setTimeout(() => {
         setErrorType(ErrorText);
       }, 5000);
     }
